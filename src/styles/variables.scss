@@ -1,0 +1,58 @@
+$color-primary: #E8A87C;
+$color-primary-light: #F5D5B8;
+$color-primary-dark: #D4A574;
+$color-secondary: #FFB6C1;
+$color-secondary-light: #FFD1DC;
+$color-accent: #98D8C8;
+$color-accent-light: #C8E6DE;
+
+$color-text-primary: #4A4A4A;
+$color-text-secondary: #7A7A7A;
+$color-text-light: #9A9A9A;
+
+$color-bg-primary: #FFF8F0;
+$color-bg-secondary: #FFE4D6;
+$color-bg-card: #FFFFFF;
+
+$color-success: #7BC47F;
+$color-warning: #FFB74D;
+$color-error: #E57373;
+$color-info: #64B5F6;
+
+$border-radius-sm: 8px;
+$border-radius-md: 12px;
+$border-radius-lg: 20px;
+$border-radius-full: 9999px;
+
+$spacing-xs: 4px;
+$spacing-sm: 8px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+$spacing-2xl: 48px;
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-lg: 18px;
+$font-size-xl: 24px;
+$font-size-2xl: 32px;
+$font-size-3xl: 48px;
+
+$font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+
+$z-index-dropdown: 100;
+$z-index-sticky: 200;
+$z-index-fixed: 300;
+$z-index-modal-backdrop: 400;
+$z-index-modal: 500;
+$z-index-toast: 600;
+
+$breakpoint-mobile: 480px;
+$breakpoint-tablet: 768px;
+$breakpoint-laptop: 1024px;
+$breakpoint-desktop: 1440px;
+
+$transition-fast: 0.15s ease;
+$transition-base: 0.3s ease;
+$transition-slow: 0.5s ease;
