@@ -1,6 +1,24 @@
-import Mock from 'mockjs'
-
-const Random = Mock.Random
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+const randomFloat = (min, max, decimals = 1) => {
+  const factor = Math.pow(10, decimals)
+  return Math.floor((Math.random() * (max - min) + min) * factor) / factor
+}
+const randomPick = (arr) => arr[Math.floor(Math.random() * arr.length)]
+const randomBoolean = (probability = 0.5) => Math.random() < probability
+const randomGuid = () => 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+  const r = Math.random() * 16 | 0
+  const v = c === 'x' ? r : (r & 0x3 | 0x8)
+  return v.toString(16)
+})
+const randomDate = (start = new Date(2020, 0, 1), end = new Date()) => {
+  const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+  return date.toISOString().split('T')[0]
+}
+const randomCname = () => {
+  const surnames = ['张', '王', '李', '赵', '刘', '陈', '杨', '黄', '周', '吴', '徐', '孙', '马', '朱', '胡']
+  const names = ['伟', '芳', '娜', '敏', '静', '丽', '强', '磊', '军', '洋', '勇', '艳', '杰', '娟', '涛']
+  return randomPick(surnames) + randomPick(names)
+}
 
 const catBreeds = [
   '中华田园猫', '橘猫', '狸花猫', '三花猫', '奶牛猫',
@@ -39,15 +57,15 @@ const rescueStories = [
 
 const generateVaccineRecords = () => {
   const records = []
-  const count = Random.integer(2, 4)
+  const count = randomInt(2, 4)
   for (let i = 0; i < count; i++) {
     records.push({
-      id: Random.guid(),
-      vaccineName: Random.pick(vaccineTypes),
-      date: Random.date('yyyy-MM-dd'),
-      nextDate: Random.date('yyyy-MM-dd'),
-      hospital: `爱心宠物医院${Random.integer(1, 5)}分院`,
-      doctor: Random.cname() + '医生'
+      id: randomGuid(),
+      vaccineName: randomPick(vaccineTypes),
+      date: randomDate(),
+      nextDate: randomDate(new Date(), new Date(2026, 11, 31)),
+      hospital: `爱心宠物医院${randomInt(1, 5)}分院`,
+      doctor: randomCname() + '医生'
     })
   }
   return records.sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -55,54 +73,57 @@ const generateVaccineRecords = () => {
 
 const generatePersonalityTraits = () => {
   const shuffled = [...personalities].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, 4).map((trait, index) => ({
+  return shuffled.slice(0, 4).map((trait) => ({
     name: trait,
-    score: Random.integer(60, 95),
-    description: `${trait}指数${Random.integer(60, 95)}分`
+    score: randomInt(60, 95),
+    description: `${trait}指数${randomInt(60, 95)}分`
   }))
 }
 
 const generateCats = (count = 50) => {
   const cats = []
+  const namePrefixes = ['小', '大', '阿', '咪']
+  const nameSuffixes = ['喵', '咪', '宝', '妞', '仔', '豆', '糖', '果', '球', '花']
+  
   for (let i = 1; i <= count; i++) {
-    const breed = Random.pick(catBreeds)
-    const color = Random.pick(catColors)
-    const ageMonths = Random.integer(2, 120)
+    const breed = randomPick(catBreeds)
+    const color = randomPick(catColors)
+    const ageMonths = randomInt(2, 120)
     const years = Math.floor(ageMonths / 12)
     const months = ageMonths % 12
     const ageText = years > 0 
       ? months > 0 ? `${years}岁${months}个月` : `${years}岁`
       : `${months}个月`
     
-    const healthStatus = Random.pick(healthStatuses)
+    const healthStatus = randomPick(healthStatuses)
     
     cats.push({
       id: i,
-      name: Random.cname().replace(/[张王李赵刘陈杨黄周吴]/, ['小', '大', '阿', '咪'][Random.integer(0, 3)]) + Random.pick(['喵', '咪', '宝', '妞', '仔', '豆', '糖', '果', '球', '花']),
+      name: randomPick(namePrefixes) + randomPick(nameSuffixes),
       breed,
       color,
-      gender: Random.pick(['公', '母']),
+      gender: randomPick(['公', '母']),
       ageMonths,
       ageText,
       ageCategory: ageMonths < 12 ? 'kitten' : ageMonths < 84 ? 'adult' : 'senior',
-      weight: Random.float(2, 8, 1, 1),
+      weight: randomFloat(2, 8, 1),
       healthStatus: healthStatus.value,
       healthStatusText: healthStatus.label,
-      sterilized: Random.boolean(0.7),
-      vaccineCompleted: Random.boolean(0.8),
+      sterilized: randomBoolean(0.7),
+      vaccineCompleted: randomBoolean(0.8),
       personality: generatePersonalityTraits(),
-      activityLevel: Random.integer(1, 5),
-      independenceLevel: Random.integer(1, 5),
-      friendlinessLevel: Random.integer(1, 5),
-      playfulnessLevel: Random.integer(1, 5),
-      noiseLevel: Random.integer(1, 5),
-      sheddingLevel: Random.integer(1, 5),
-      childFriendly: Random.boolean(0.6),
-      petFriendly: Random.boolean(0.5),
-      apartmentSuitable: Random.boolean(0.7),
-      specialNeeds: healthStatus.value === 'special_care' ? Random.pick(['需要定期服药', '需要特殊饮食', '行动不便', '需要更多陪伴']) : null,
-      rescueStory: Random.pick(rescueStories),
-      rescueDate: Random.date('yyyy-MM-dd'),
+      activityLevel: randomInt(1, 5),
+      independenceLevel: randomInt(1, 5),
+      friendlinessLevel: randomInt(1, 5),
+      playfulnessLevel: randomInt(1, 5),
+      noiseLevel: randomInt(1, 5),
+      sheddingLevel: randomInt(1, 5),
+      childFriendly: randomBoolean(0.6),
+      petFriendly: randomBoolean(0.5),
+      apartmentSuitable: randomBoolean(0.7),
+      specialNeeds: healthStatus.value === 'special_care' ? randomPick(['需要定期服药', '需要特殊饮食', '行动不便', '需要更多陪伴']) : null,
+      rescueStory: randomPick(rescueStories),
+      rescueDate: randomDate(new Date(2022, 0, 1)),
       vaccineRecords: generateVaccineRecords(),
       images: [
         `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20${encodeURIComponent(breed)}%20cat%20${encodeURIComponent(color)}%20fur%20portrait%20warm%20soft%20lighting&image_size=square_hd`,
@@ -110,9 +131,9 @@ const generateCats = (count = 50) => {
         `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=${encodeURIComponent(breed)}%20cat%20${encodeURIComponent(color)}%20sleeping%20cute%20fluffy&image_size=square_hd`
       ],
       avatar: `https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cute%20${encodeURIComponent(breed)}%20cat%20${encodeURIComponent(color)}%20fur%20portrait%20warm%20soft%20lighting&image_size=square`,
-      views: Random.integer(100, 5000),
-      favorites: Random.integer(10, 500),
-      adoptionStatus: Random.pick(['available', 'pending', 'adopted']),
+      views: randomInt(100, 5000),
+      favorites: randomInt(10, 500),
+      adoptionStatus: randomPick(['available', 'pending', 'adopted']),
       matchScore: null
     })
   }
@@ -335,6 +356,160 @@ const questionnaireQuestions = [
 export const mockCats = generateCats(50)
 export const mockQuestions = questionnaireQuestions
 
+const calculateDimensionScores = (answers, matchedCats) => {
+  const scores = {
+    activity: 70,
+    space: 70,
+    experience: 70,
+    lifestyle: 70,
+    personality: 70
+  }
+  
+  const workSchedule = answers.work_schedule
+  const dailyFreeTime = answers.daily_free_time
+  const activityPreference = answers.activity_preference
+  const housingType = answers.housing_type
+  const hasBalcony = answers.has_balcony
+  const catExperience = answers.cat_experience
+  const preferredAge = answers.preferred_age
+  const specialNeedsWilling = answers.special_needs_willing
+  const noiseSensitivity = answers.noise_sensitivity
+  const personalityPref = answers.personality_preference || []
+  const familyMembers = answers.family_members
+  const hasOtherPets = answers.has_other_pets
+  
+  if (workSchedule === 'regular') scores.activity += 10
+  else if (workSchedule === 'flexible') scores.activity += 15
+  else if (workSchedule === 'busy') scores.activity -= 5
+  else if (workSchedule === 'shift') scores.activity -= 10
+  
+  if (dailyFreeTime === 'less_1h') scores.activity -= 10
+  else if (dailyFreeTime === '1_2h') scores.activity -= 5
+  else if (dailyFreeTime === '2_4h') scores.activity += 5
+  else if (dailyFreeTime === 'more_4h') scores.activity += 10
+  
+  if (activityPreference === 'quiet') scores.activity -= 10
+  else if (activityPreference === 'moderate') scores.activity += 0
+  else if (activityPreference === 'active') scores.activity += 10
+  else if (activityPreference === 'social') scores.activity += 15
+  
+  if (housingType === 'apartment_small') scores.space -= 10
+  else if (housingType === 'apartment_medium') scores.space += 0
+  else if (housingType === 'apartment_large') scores.space += 10
+  else if (housingType === 'house') scores.space += 15
+  
+  if (hasBalcony === 'yes_closed') scores.space += 10
+  else if (hasBalcony === 'yes_open') scores.space += 5
+  else if (hasBalcony === 'no') scores.space -= 5
+  
+  if (catExperience === 'first_time') scores.experience -= 10
+  else if (catExperience === 'some') scores.experience += 0
+  else if (catExperience === 'experienced') scores.experience += 10
+  else if (catExperience === 'expert') scores.experience += 15
+  
+  if (preferredAge === 'no_preference') scores.experience += 5
+  
+  if (specialNeedsWilling === 'yes') scores.experience += 10
+  else if (specialNeedsWilling === 'maybe') scores.experience += 5
+  else if (specialNeedsWilling === 'prefer_not') scores.experience += 0
+  else if (specialNeedsWilling === 'no') scores.experience -= 5
+  
+  if (workSchedule === 'regular') scores.lifestyle += 10
+  else if (workSchedule === 'flexible') scores.lifestyle += 15
+  else if (workSchedule === 'busy') scores.lifestyle -= 5
+  else if (workSchedule === 'shift') scores.lifestyle -= 10
+  
+  if (noiseSensitivity === 'very_sensitive') scores.lifestyle -= 10
+  else if (noiseSensitivity === 'somewhat_sensitive') scores.lifestyle -= 5
+  else if (noiseSensitivity === 'neutral') scores.lifestyle += 0
+  else if (noiseSensitivity === 'not_sensitive') scores.lifestyle += 5
+  
+  if (activityPreference === 'quiet') scores.lifestyle += 5
+  else if (activityPreference === 'social') scores.lifestyle -= 5
+  
+  if (personalityPref.includes('active')) scores.personality += 10
+  if (personalityPref.includes('cuddly')) scores.personality += 10
+  if (personalityPref.includes('independent')) scores.personality += 10
+  if (personalityPref.includes('gentle')) scores.personality += 10
+  if (personalityPref.includes('curious')) scores.personality += 10
+  if (personalityPref.includes('lazy')) scores.personality += 10
+  
+  if (familyMembers === 'single') scores.personality += 5
+  else if (familyMembers === 'family_kids') scores.personality += 10
+  
+  if (hasOtherPets !== 'no') scores.personality += 5
+  
+  if (matchedCats.length > 0) {
+    const avgActivity = matchedCats.reduce((sum, cat) => sum + cat.activityLevel, 0) / matchedCats.length
+    const avgIndependence = matchedCats.reduce((sum, cat) => sum + cat.independenceLevel, 0) / matchedCats.length
+    const avgFriendliness = matchedCats.reduce((sum, cat) => sum + cat.friendlinessLevel, 0) / matchedCats.length
+    
+    scores.activity = Math.round((scores.activity + avgActivity * 10) / 2)
+    scores.personality = Math.round((scores.personality + (avgFriendliness + avgIndependence) * 5) / 2)
+  }
+  
+  for (const key of Object.keys(scores)) {
+    scores[key] = Math.max(50, Math.min(98, Math.round(scores[key])))
+  }
+  
+  return scores
+}
+
+const generateSuggestions = (answers, dimensionScores, matchedCats) => {
+  const suggestions = []
+  
+  if (dimensionScores.activity >= 80) {
+    suggestions.push('您的活动量与匹配猫咪非常契合，互动时会有很高的默契度。')
+  } else if (dimensionScores.activity < 65) {
+    suggestions.push('建议选择活动量适中的猫咪，避免因精力不匹配产生困扰。')
+  }
+  
+  if (dimensionScores.space >= 80) {
+    suggestions.push('您的居住空间非常适合猫咪活动，大部分猫咪都能很好地适应。')
+  } else if (dimensionScores.space < 65) {
+    suggestions.push('您的居住空间相对有限，建议选择体型较小、活动量适中的猫咪。')
+  }
+  
+  if (dimensionScores.experience >= 80) {
+    suggestions.push('您的养猫经验丰富，可以很好地照顾各种性格的猫咪。')
+  } else if (dimensionScores.experience < 65) {
+    suggestions.push('作为新手铲屎官，建议选择性格温顺、适应能力强的猫咪。')
+  }
+  
+  if (dimensionScores.lifestyle >= 80) {
+    suggestions.push('您的生活方式非常适合养猫，能给猫咪提供稳定有爱的环境。')
+  } else if (dimensionScores.lifestyle < 65) {
+    suggestions.push('您的生活节奏较快，建议选择独立性较强的猫咪品种。')
+  }
+  
+  if (dimensionScores.personality >= 80) {
+    suggestions.push('您的性格偏好与匹配猫咪高度契合，相处会非常融洽。')
+  } else if (dimensionScores.personality < 65) {
+    suggestions.push('建议多花时间了解猫咪的性格特点，建立良好的信任关系。')
+  }
+  
+  const topCat = matchedCats[0]
+  if (topCat) {
+    if (topCat.healthStatus === 'special_care') {
+      suggestions.push(`特别提醒：${topCat.name}需要特殊照顾，请确保有足够的时间和精力。`)
+    }
+    if (topCat.ageCategory === 'kitten') {
+      suggestions.push(`${topCat.name}是一只活泼的幼猫，需要更多的陪伴和玩耍时间。`)
+    } else if (topCat.ageCategory === 'senior') {
+      suggestions.push(`${topCat.name}是一只安静的老年猫，适合喜欢安稳生活的您。`)
+    }
+  }
+  
+  if (suggestions.length < 4) {
+    suggestions.push('领养前建议先与猫咪视频互动，确认是否是您心仪的伙伴。')
+  }
+  if (suggestions.length < 4) {
+    suggestions.push('请确保家人都同意养猫，并准备好必要的生活用品。')
+  }
+  
+  return suggestions.slice(0, 4)
+}
+
 const matchCats = (answers) => {
   const scoredCats = mockCats
     .filter(cat => cat.adoptionStatus === 'available')
@@ -393,25 +568,14 @@ const matchCats = (answers) => {
     .sort((a, b) => b.matchScore - a.matchScore)
     .slice(0, 6)
   
-  const personalityMatch = {
-    activity: Math.round(Math.random() * 30 + 60),
-    space: Math.round(Math.random() * 30 + 60),
-    experience: Math.round(Math.random() * 30 + 60),
-    lifestyle: Math.round(Math.random() * 30 + 60),
-    personality: Math.round(Math.random() * 30 + 60)
-  }
-  
-  const suggestions = [
-    '您的生活节奏比较规律，适合选择性格稳定的成年猫。',
-    '您有较多的陪伴时间，可以考虑活泼好动的幼猫。',
-    '您的居住空间适合猫咪活动，大部分猫咪都能适应。',
-    '建议选择与您生活习惯匹配度高的猫咪，减少磨合期。'
-  ]
+  const personalityMatch = calculateDimensionScores(answers, scoredCats)
+  const suggestions = generateSuggestions(answers, personalityMatch, scoredCats)
+  const overallScore = Math.round(Object.values(personalityMatch).reduce((a, b) => a + b, 0) / Object.values(personalityMatch).length)
   
   return {
     matchedCats: scoredCats,
     personalityMatch,
-    overallScore: Math.round(Object.values(personalityMatch).reduce((a, b) => a + b, 0) / Object.values(personalityMatch).length),
+    overallScore,
     suggestions
   }
 }

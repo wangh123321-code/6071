@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { mockApi } from '@/mock/data'
 
-const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true' || true
+const USE_MOCK = import.meta.env.VITE_USE_MOCK === 'true'
 
 const mockDelay = () => new Promise(resolve => setTimeout(resolve, Math.random() * 400 + 200))
 
