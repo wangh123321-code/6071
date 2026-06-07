@@ -7,15 +7,29 @@
         type="text"
         placeholder="搜索猫咪名字或品种..."
         @input="handleSearch"
-      />
-      <button v-if="searchText" class="clear-btn" @click="clearSearch">✕</button>
+      >
+      <button
+        v-if="searchText"
+        class="clear-btn"
+        @click="clearSearch"
+      >
+        ✕
+      </button>
     </div>
     
     <div class="filter-groups">
       <div class="filter-group">
         <label class="filter-label">品种</label>
-        <select v-model="selectedBreed" class="filter-select" @change="applyFilters">
-          <option v-for="breed in filters.breeds" :key="breed" :value="breed">
+        <select
+          v-model="selectedBreed"
+          class="filter-select"
+          @change="applyFilters"
+        >
+          <option
+            v-for="breed in filters.breeds"
+            :key="breed"
+            :value="breed"
+          >
             {{ breed === 'all' ? '全部品种' : breed }}
           </option>
         </select>
@@ -23,8 +37,16 @@
       
       <div class="filter-group">
         <label class="filter-label">毛色</label>
-        <select v-model="selectedColor" class="filter-select" @change="applyFilters">
-          <option v-for="color in filters.colors" :key="color" :value="color">
+        <select
+          v-model="selectedColor"
+          class="filter-select"
+          @change="applyFilters"
+        >
+          <option
+            v-for="color in filters.colors"
+            :key="color"
+            :value="color"
+          >
             {{ color === 'all' ? '全部毛色' : color }}
           </option>
         </select>
@@ -32,7 +54,11 @@
       
       <div class="filter-group">
         <label class="filter-label">年龄</label>
-        <select v-model="selectedAge" class="filter-select" @change="applyFilters">
+        <select
+          v-model="selectedAge"
+          class="filter-select"
+          @change="applyFilters"
+        >
           <option 
             v-for="age in filters.ageCategories" 
             :key="age.value" 
@@ -43,13 +69,20 @@
         </select>
       </div>
       
-      <button class="reset-btn" @click="resetFilters" :disabled="!hasActiveFilters">
+      <button
+        class="reset-btn"
+        :disabled="!hasActiveFilters"
+        @click="resetFilters"
+      >
         <span>🔄</span>
         重置筛选
       </button>
     </div>
     
-    <div class="active-filters" v-if="hasActiveFilters">
+    <div
+      v-if="hasActiveFilters"
+      class="active-filters"
+    >
       <span 
         v-for="filter in activeFilterList" 
         :key="filter.key"

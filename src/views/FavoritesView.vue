@@ -6,7 +6,10 @@
         <p>您收藏的猫咪都在这里，随时可以查看详情</p>
       </div>
       
-      <div v-if="favorites.length > 0" class="favorites-info">
+      <div
+        v-if="favorites.length > 0"
+        class="favorites-info"
+      >
         <span>
           共收藏了 <strong>{{ favorites.length }}</strong> 只猫咪
         </span>

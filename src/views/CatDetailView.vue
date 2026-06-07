@@ -1,7 +1,10 @@
 <template>
   <div class="cat-detail-view">
     <div class="container">
-      <button class="back-btn" @click="goBack">
+      <button
+        class="back-btn"
+        @click="goBack"
+      >
         ← 返回列表
       </button>
       <CatDetailView />

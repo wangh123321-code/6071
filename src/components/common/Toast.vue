@@ -1,6 +1,10 @@
 <template>
   <transition name="toast">
-    <div v-if="visible" class="toast" :class="type">
+    <div
+      v-if="visible"
+      class="toast"
+      :class="type"
+    >
       <span class="icon">{{ icon }}</span>
       <span class="message">{{ message }}</span>
     </div>

@@ -1,5 +1,8 @@
 <template>
-  <div class="waterfall-container" ref="containerRef">
+  <div
+    ref="containerRef"
+    class="waterfall-container"
+  >
     <div 
       v-for="(column, colIndex) in columns" 
       :key="colIndex"
@@ -11,16 +14,22 @@
         class="waterfall-item"
         :style="{ animationDelay: `${item._index * 0.05}s` }"
       >
-        <slot :item="item"></slot>
+        <slot :item="item" />
       </div>
     </div>
     
-    <div v-if="loading" class="loading-more">
-      <div class="spinner"></div>
+    <div
+      v-if="loading"
+      class="loading-more"
+    >
+      <div class="spinner" />
       <span>加载中...</span>
     </div>
     
-    <div v-if="!hasMore && items.length > 0" class="no-more">
+    <div
+      v-if="!hasMore && items.length > 0"
+      class="no-more"
+    >
       <span>🐾 已经到底啦 ~</span>
     </div>
   </div>

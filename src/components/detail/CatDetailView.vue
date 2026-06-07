@@ -1,9 +1,15 @@
 <template>
-  <div class="cat-detail" v-if="cat">
+  <div
+    v-if="cat"
+    class="cat-detail"
+  >
     <div class="detail-hero">
       <div class="image-gallery">
         <div class="main-image">
-          <LazyImage :src="currentImage" :alt="cat.name" />
+          <LazyImage
+            :src="currentImage"
+            :alt="cat.name"
+          />
         </div>
         <div class="thumbnails">
           <button
@@ -13,24 +19,38 @@
             :class="{ active: currentImageIndex === index }"
             @click="currentImageIndex = index"
           >
-            <LazyImage :src="img" :alt="`${cat.name} - ${index + 1}`" />
+            <LazyImage
+              :src="img"
+              :alt="`${cat.name} - ${index + 1}`"
+            />
           </button>
         </div>
       </div>
       
       <div class="hero-info">
         <div class="info-header">
-          <h1 class="cat-name">{{ cat.name }}</h1>
-          <span class="cat-gender" :class="cat.gender">
+          <h1 class="cat-name">
+            {{ cat.name }}
+          </h1>
+          <span
+            class="cat-gender"
+            :class="cat.gender"
+          >
             {{ cat.gender === '公' ? '♂ 公猫' : '♀ 母猫' }}
           </span>
         </div>
         
         <div class="status-row">
-          <span class="status-badge" :class="cat.adoptionStatus">
-            {{ statusText }}
+          <span
+            class="status-badge"
+            :class="displayStatus"
+          >
+            {{ displayStatusText }}
           </span>
-          <span class="health-badge" :class="cat.healthStatus">
+          <span
+            class="health-badge"
+            :class="cat.healthStatus"
+          >
             {{ cat.healthStatusText }}
           </span>
         </div>
@@ -68,7 +88,10 @@
           </div>
         </div>
         
-        <div v-if="cat.specialNeeds" class="special-needs">
+        <div
+          v-if="cat.specialNeeds"
+          class="special-needs"
+        >
           <span class="needs-icon">⚠️</span>
           <span class="needs-text">特殊需求：{{ cat.specialNeeds }}</span>
         </div>
@@ -83,10 +106,25 @@
           </button>
           <button 
             class="action-btn appointment"
-            @click="showAppointmentModal = true"
             :disabled="hasAppointment"
+            @click="showAppointmentModal = true"
           >
             <span>{{ hasAppointment ? '⏰ 已预约' : '📹 视频预约' }}</span>
+          </button>
+          <button 
+            v-if="!hasAdoptionApplication"
+            class="action-btn adoption"
+            :disabled="cat.adoptionStatus === 'adopted'"
+            @click="showAdoptionForm = true"
+          >
+            <span>{{ cat.adoptionStatus === 'adopted' ? '🏠 已被领养' : '📝 申请领养' }}</span>
+          </button>
+          <button 
+            v-else
+            class="action-btn adoption applied"
+            @click="viewApplication"
+          >
+            <span>📋 查看申请</span>
           </button>
         </div>
         
@@ -121,8 +159,13 @@
     </div>
     
     <div class="tab-content">
-      <div v-if="activeTab === 'personality'" class="personality-section">
-        <h3 class="section-title">性格测评</h3>
+      <div
+        v-if="activeTab === 'personality'"
+        class="personality-section"
+      >
+        <h3 class="section-title">
+          性格测评
+        </h3>
         <div class="personality-traits">
           <div 
             v-for="trait in cat.personality" 
@@ -140,16 +183,21 @@
                   width: `${trait.score}%`,
                   background: getTraitGradient(trait.score)
                 }"
-              ></div>
+              />
             </div>
-            <p class="trait-desc">{{ trait.description }}</p>
+            <p class="trait-desc">
+              {{ trait.description }}
+            </p>
           </div>
         </div>
         
         <div class="personality-chart">
           <h4>性格雷达图</h4>
           <div class="chart-wrapper">
-            <Radar :data="personalityRadarData" :options="radarOptions" />
+            <Radar
+              :data="personalityRadarData"
+              :options="radarOptions"
+            />
           </div>
         </div>
         
@@ -163,7 +211,7 @@
                 :key="i" 
                 class="level-dot"
                 :class="{ active: i <= cat.activityLevel }"
-              ></span>
+              />
             </div>
             <p>{{ getLevelText(cat.activityLevel) }}</p>
           </div>
@@ -176,7 +224,7 @@
                 :key="i" 
                 class="level-dot"
                 :class="{ active: i <= cat.friendlinessLevel }"
-              ></span>
+              />
             </div>
             <p>{{ getLevelText(cat.friendlinessLevel) }}</p>
           </div>
@@ -189,7 +237,7 @@
                 :key="i" 
                 class="level-dot"
                 :class="{ active: i <= cat.independenceLevel }"
-              ></span>
+              />
             </div>
             <p>{{ getLevelText(cat.independenceLevel) }}</p>
           </div>
@@ -202,26 +250,39 @@
                 :key="i" 
                 class="level-dot"
                 :class="{ active: i <= cat.playfulnessLevel }"
-              ></span>
+              />
             </div>
             <p>{{ getLevelText(cat.playfulnessLevel) }}</p>
           </div>
         </div>
       </div>
       
-      <div v-else-if="activeTab === 'vaccine'" class="vaccine-section">
-        <h3 class="section-title">疫苗记录</h3>
+      <div
+        v-else-if="activeTab === 'vaccine'"
+        class="vaccine-section"
+      >
+        <h3 class="section-title">
+          疫苗记录
+        </h3>
         <div class="vaccine-timeline">
           <div 
             v-for="(record, index) in cat.vaccineRecords" 
             :key="record.id"
             class="timeline-item"
           >
-            <div class="timeline-dot" :class="{ latest: index === 0 }"></div>
-            <div class="timeline-line" v-if="index < cat.vaccineRecords.length - 1"></div>
+            <div
+              class="timeline-dot"
+              :class="{ latest: index === 0 }"
+            />
+            <div
+              v-if="index < cat.vaccineRecords.length - 1"
+              class="timeline-line"
+            />
             <div class="timeline-content">
               <div class="vaccine-header">
-                <h4 class="vaccine-name">{{ record.vaccineName }}</h4>
+                <h4 class="vaccine-name">
+                  {{ record.vaccineName }}
+                </h4>
                 <span class="vaccine-status">已完成 ✓</span>
               </div>
               <div class="vaccine-details">
@@ -251,19 +312,30 @@
             <span class="summary-icon">✅</span>
             <span class="summary-text">已完成 {{ cat.vaccineRecords.length }} 次疫苗接种</span>
           </div>
-          <div class="summary-item" v-if="cat.vaccineCompleted">
+          <div
+            v-if="cat.vaccineCompleted"
+            class="summary-item"
+          >
             <span class="summary-icon">🎉</span>
             <span class="summary-text">基础疫苗已全部完成</span>
           </div>
-          <div class="summary-item" v-else>
+          <div
+            v-else
+            class="summary-item"
+          >
             <span class="summary-icon">📋</span>
             <span class="summary-text">疫苗接种进行中，请按时完成</span>
           </div>
         </div>
       </div>
       
-      <div v-else-if="activeTab === 'story'" class="story-section">
-        <h3 class="section-title">救助故事</h3>
+      <div
+        v-else-if="activeTab === 'story'"
+        class="story-section"
+      >
+        <h3 class="section-title">
+          救助故事
+        </h3>
         <div class="story-card">
           <div class="story-header">
             <span class="story-date">救助日期：{{ cat.rescueDate }}</span>
@@ -302,6 +374,29 @@
       @close="showAppointmentModal = false"
       @success="handleAppointmentSuccess"
     />
+
+    <div
+      v-if="showAdoptionForm"
+      class="modal-overlay"
+      @click.self="showAdoptionForm = false"
+    >
+      <div
+        class="form-wrapper"
+        @click.stop
+      >
+        <button
+          class="close-form-btn"
+          @click="showAdoptionForm = false"
+        >
+          ✕
+        </button>
+        <AdoptionApplicationForm
+          :cat="cat"
+          @close="showAdoptionForm = false"
+          @success="handleAdoptionSuccess"
+        />
+      </div>
+    </div>
     
     <Toast
       :show="toast.show"
@@ -311,16 +406,27 @@
     />
   </div>
   
-  <div v-else-if="loading" class="loading-state">
-    <div class="spinner"></div>
+  <div
+    v-else-if="loading"
+    class="loading-state"
+  >
+    <div class="spinner" />
     <p>加载中...</p>
   </div>
   
-  <div v-else class="not-found">
-    <div class="icon">😿</div>
+  <div
+    v-else
+    class="not-found"
+  >
+    <div class="icon">
+      😿
+    </div>
     <h2>找不到这只猫咪</h2>
     <p>它可能已经被领养了，或者链接有误</p>
-    <router-link to="/cats" class="back-btn">
+    <router-link
+      to="/cats"
+      class="back-btn"
+    >
       返回猫咪列表
     </router-link>
   </div>
@@ -330,7 +436,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCatStore } from '@/stores/catStore'
-import { useAppointmentStore } from '@/stores/appointmentStore'
+import { useAppointmentStore, ADOPTION_STATUS_TEXT } from '@/stores/appointmentStore'
 import { Radar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -343,6 +449,7 @@ import {
 } from 'chart.js'
 import LazyImage from '@/components/common/LazyImage.vue'
 import VideoAppointmentModal from '@/components/detail/VideoAppointmentModal.vue'
+import AdoptionApplicationForm from '@/components/detail/AdoptionApplicationForm.vue'
 import Toast from '@/components/common/Toast.vue'
 import { getMatchColor } from '@/utils'
 
@@ -365,10 +472,32 @@ const cat = computed(() => catStore.catDetail)
 const loading = computed(() => catStore.detailLoading)
 const isFavorited = computed(() => catStore.isFavorite(catId.value))
 const hasAppointment = computed(() => appointmentStore.hasAppointmentForCat(catId.value))
+const hasAdoptionApplication = computed(() => appointmentStore.hasAdoptionApplicationForCat(catId.value))
+const adoptionApplication = computed(() => appointmentStore.getAdoptionApplicationForCat(catId.value))
+
+const displayStatus = computed(() => {
+  if (adoptionApplication.value) {
+    return adoptionApplication.value.status
+  }
+  return cat.value?.adoptionStatus || 'available'
+})
+
+const displayStatusText = computed(() => {
+  if (adoptionApplication.value) {
+    return ADOPTION_STATUS_TEXT[adoptionApplication.value.status] + '（您已申请）'
+  }
+  const statusMap = {
+    available: '可领养',
+    pending: '审核中',
+    adopted: '已领养'
+  }
+  return statusMap[cat.value?.adoptionStatus] || '可领养'
+})
 
 const currentImageIndex = ref(0)
 const activeTab = ref('personality')
 const showAppointmentModal = ref(false)
+const showAdoptionForm = ref(false)
 const randomVolunteer = ref(['张小明', '李小红', '王大伟', '刘芳芳', '陈建国'][Math.floor(Math.random() * 5)])
 
 const toast = ref({
@@ -380,15 +509,6 @@ const toast = ref({
 const currentImage = computed(() => {
   if (!cat.value?.images) return ''
   return cat.value.images[currentImageIndex.value] || cat.value.avatar
-})
-
-const statusText = computed(() => {
-  const statusMap = {
-    available: '可领养',
-    pending: '审核中',
-    adopted: '已领养'
-  }
-  return statusMap[cat.value?.adoptionStatus] || '可领养'
 })
 
 const daysInShelter = computed(() => {
@@ -493,6 +613,19 @@ const handleAppointmentSuccess = () => {
     message: '预约申请已提交，工作人员会在24小时内与您联系',
     type: 'success'
   }
+}
+
+const handleAdoptionSuccess = () => {
+  showAdoptionForm.value = false
+  toast.value = {
+    show: true,
+    message: '领养申请已提交，我们会尽快审核，请关注申请状态',
+    type: 'success'
+  }
+}
+
+const viewApplication = () => {
+  router.push('/my-applications')
 }
 
 onMounted(async () => {
@@ -628,6 +761,26 @@ onUnmounted(() => {
     color: $color-warning;
   }
   
+  &.reviewing {
+    background: rgba(100, 181, 246, 0.15);
+    color: #1976D2;
+  }
+  
+  &.approved {
+    background: rgba(123, 196, 127, 0.15);
+    color: $color-success;
+  }
+  
+  &.rejected {
+    background: rgba(229, 115, 115, 0.15);
+    color: $color-error;
+  }
+  
+  &.cancelled {
+    background: rgba(154, 154, 154, 0.15);
+    color: $color-text-light;
+  }
+  
   &.adopted {
     background: rgba(154, 154, 154, 0.15);
     color: $color-text-light;
@@ -745,6 +898,33 @@ onUnmounted(() => {
       cursor: not-allowed;
       transform: none;
       box-shadow: none;
+    }
+  }
+
+  &.adoption {
+    background: linear-gradient(135deg, #66BB6A 0%, #43A047 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 187, 106, 0.3);
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 187, 106, 0.4);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    &.applied {
+      background: linear-gradient(135deg, #FFB74D 0%, #FF9800 100%);
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+      
+      &:hover {
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.4);
+      }
     }
   }
 }
@@ -1229,5 +1409,50 @@ onUnmounted(() => {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.form-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+}
+
+.close-form-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: rotate(90deg);
+  }
 }
 </style>

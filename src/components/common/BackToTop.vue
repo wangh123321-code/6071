@@ -3,8 +3,8 @@
     <button 
       v-if="isVisible" 
       class="back-to-top"
-      @click="scrollToTop"
       aria-label="回到顶部"
+      @click="scrollToTop"
     >
       <span class="arrow">↑</span>
     </button>

@@ -8,22 +8,36 @@
       
       <FilterPanel @filter-change="handleFilterChange" />
       
-      <div class="results-info" v-if="!loading">
+      <div
+        v-if="!loading"
+        class="results-info"
+      >
         <span>
           共找到 <strong>{{ totalCats }}</strong> 只符合条件的猫咪
         </span>
       </div>
       
-      <div v-if="loading && cats.length === 0" class="loading-state">
-        <div class="spinner"></div>
+      <div
+        v-if="loading && cats.length === 0"
+        class="loading-state"
+      >
+        <div class="spinner" />
         <p>加载中...</p>
       </div>
       
-      <div v-else-if="cats.length === 0" class="empty-state">
-        <div class="empty-icon">😿</div>
+      <div
+        v-else-if="cats.length === 0"
+        class="empty-state"
+      >
+        <div class="empty-icon">
+          😿
+        </div>
         <h3>没有找到符合条件的猫咪</h3>
         <p>试试调整筛选条件吧</p>
-        <button class="reset-btn" @click="resetFilters">
+        <button
+          class="reset-btn"
+          @click="resetFilters"
+        >
           重置筛选条件
         </button>
       </div>

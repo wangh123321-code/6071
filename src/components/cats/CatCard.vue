@@ -5,22 +5,34 @@
     @click="handleCardClick"
   >
     <div class="card-image">
-      <LazyImage :src="cat.avatar" :alt="cat.name" />
+      <LazyImage
+        :src="cat.avatar"
+        :alt="cat.name"
+      />
       <div class="card-overlay">
         <button 
           class="favorite-btn"
           :class="{ active: isFavorited }"
-          @click.stop="toggleFavorite"
           :title="isFavorited ? '取消收藏' : '添加收藏'"
+          @click.stop="toggleFavorite"
         >
           <span>{{ isFavorited ? '❤️' : '🤍' }}</span>
         </button>
-        <div class="status-badge" :class="cat.adoptionStatus">
+        <div
+          class="status-badge"
+          :class="cat.adoptionStatus"
+        >
           {{ statusText }}
         </div>
       </div>
-      <div v-if="showMatchScore && cat.matchScore" class="match-score">
-        <div class="score-ring" :style="{ '--score-color': scoreColor }">
+      <div
+        v-if="showMatchScore && cat.matchScore"
+        class="match-score"
+      >
+        <div
+          class="score-ring"
+          :style="{ '--score-color': scoreColor }"
+        >
           <span class="score-value">{{ cat.matchScore }}</span>
           <span class="score-label">匹配度</span>
         </div>
@@ -29,8 +41,13 @@
     
     <div class="card-content">
       <div class="card-header">
-        <h3 class="cat-name">{{ cat.name }}</h3>
-        <span class="cat-gender" :class="cat.gender">
+        <h3 class="cat-name">
+          {{ cat.name }}
+        </h3>
+        <span
+          class="cat-gender"
+          :class="cat.gender"
+        >
           {{ cat.gender === '公' ? '♂' : '♀' }}
         </span>
       </div>
@@ -62,7 +79,10 @@
             <span class="stat-value">{{ cat.favorites }}</span>
           </span>
         </div>
-        <span class="health-status" :class="cat.healthStatus">
+        <span
+          class="health-status"
+          :class="cat.healthStatus"
+        >
           {{ cat.healthStatusText }}
         </span>
       </div>

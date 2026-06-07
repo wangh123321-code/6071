@@ -1,12 +1,22 @@
 <template>
   <header class="app-header">
     <div class="header-container">
-      <router-link to="/" class="logo">
-        <img src="/cat-paw.svg" alt="logo" class="logo-icon" />
+      <router-link
+        to="/"
+        class="logo"
+      >
+        <img
+          src="/cat-paw.svg"
+          alt="logo"
+          class="logo-icon"
+        >
         <span class="logo-text">喵星之家</span>
       </router-link>
       
-      <nav class="nav-menu" :class="{ active: isMenuOpen }">
+      <nav
+        class="nav-menu"
+        :class="{ active: isMenuOpen }"
+      >
         <router-link 
           v-for="item in navItems" 
           :key="item.path" 
@@ -21,12 +31,25 @@
       </nav>
       
       <div class="header-actions">
-        <router-link to="/favorites" class="favorite-btn" title="我的收藏">
+        <router-link
+          to="/favorites"
+          class="favorite-btn"
+          title="我的收藏"
+        >
           <span class="icon">❤️</span>
-          <span v-if="favoriteCount > 0" class="badge">{{ favoriteCount }}</span>
+          <span
+            v-if="favoriteCount > 0"
+            class="badge"
+          >{{ favoriteCount }}</span>
         </router-link>
-        <button class="menu-toggle" @click="isMenuOpen = !isMenuOpen">
-          <span class="hamburger" :class="{ active: isMenuOpen }"></span>
+        <button
+          class="menu-toggle"
+          @click="isMenuOpen = !isMenuOpen"
+        >
+          <span
+            class="hamburger"
+            :class="{ active: isMenuOpen }"
+          />
         </button>
       </div>
     </div>
@@ -47,6 +70,7 @@ const navItems = [
   { path: '/cats', label: '猫咪列表', icon: '🐱' },
   { path: '/questionnaire', label: '智能匹配', icon: '🎯' },
   { path: '/favorites', label: '我的收藏', icon: '❤️' },
+  { path: '/my-applications', label: '我的申请', icon: '📋' },
   { path: '/about', label: '关于我们', icon: 'ℹ️' }
 ]
 </script>

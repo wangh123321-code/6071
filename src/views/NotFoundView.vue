@@ -9,10 +9,16 @@
         <h1>页面走丢了</h1>
         <p>这只猫咪好像找不到回家的路了...</p>
         <div class="actions">
-          <router-link to="/" class="btn-primary">
+          <router-link
+            to="/"
+            class="btn-primary"
+          >
             🏠 返回首页
           </router-link>
-          <router-link to="/cats" class="btn-secondary">
+          <router-link
+            to="/cats"
+            class="btn-secondary"
+          >
             🐱 浏览猫咪
           </router-link>
         </div>

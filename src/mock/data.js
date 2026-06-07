@@ -644,9 +644,22 @@ const getFavorites = () => {
 }
 
 const submitAppointment = (data) => {
-  return {
-    appointmentId: Date.now(),
+  const baseData = {
+    id: Date.now(),
+    createdAt: new Date().toISOString(),
     ...data
+  }
+  
+  if (data.type === 'adoption') {
+    return {
+      ...baseData,
+      applicationId: baseData.id
+    }
+  }
+  
+  return {
+    ...baseData,
+    appointmentId: baseData.id
   }
 }
 

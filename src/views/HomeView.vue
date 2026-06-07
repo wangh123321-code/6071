@@ -14,10 +14,16 @@
             减少因性格不合导致的二次伤害，让每一次领养都是最美的遇见。
           </p>
           <div class="hero-actions">
-            <router-link to="/questionnaire" class="btn-primary">
+            <router-link
+              to="/questionnaire"
+              class="btn-primary"
+            >
               🎯 开始智能匹配
             </router-link>
-            <router-link to="/cats" class="btn-secondary">
+            <router-link
+              to="/cats"
+              class="btn-secondary"
+            >
               🐱 浏览所有猫咪
             </router-link>
           </div>
@@ -42,7 +48,7 @@
               src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=warm%20cozy%20cat%20adoption%20scene%20cute%20cats%20playing%20soft%20warm%20lighting%20pastel%20colors&image_size=landscape_16_9" 
               alt="可爱的猫咪"
               loading="lazy"
-            />
+            >
             <div class="floating-card card-1">
               <span class="emoji">😺</span>
               <span>找到新家啦！</span>
@@ -64,22 +70,30 @@
         </div>
         <div class="features-grid">
           <div class="feature-card">
-            <div class="feature-icon">🎯</div>
+            <div class="feature-icon">
+              🎯
+            </div>
             <h3>智能匹配</h3>
             <p>根据您的生活习惯、居住环境、养猫经验，从性格、年龄、健康状况多维度精准匹配</p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">📋</div>
+            <div class="feature-icon">
+              📋
+            </div>
             <h3>详细档案</h3>
             <p>每只猫咪都有完整的疫苗记录、性格测评、救助故事，让您全面了解它的一切</p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">📹</div>
+            <div class="feature-icon">
+              📹
+            </div>
             <h3>视频预约</h3>
             <p>足不出户就能与猫咪视频互动，提前建立感情纽带，确认是否是您心仪的伙伴</p>
           </div>
           <div class="feature-card">
-            <div class="feature-icon">💖</div>
+            <div class="feature-icon">
+              💖
+            </div>
             <h3>温馨陪伴</h3>
             <p>领养后定期回访，提供专业养猫建议，让您和猫咪都能享受美好的相处时光</p>
           </div>
@@ -95,31 +109,45 @@
         </div>
         <div class="process-steps">
           <div class="step-item">
-            <div class="step-number">1</div>
+            <div class="step-number">
+              1
+            </div>
             <div class="step-content">
               <h3>填写问卷</h3>
               <p>花3分钟完成生活习惯问卷</p>
             </div>
-            <div class="step-arrow">→</div>
+            <div class="step-arrow">
+              →
+            </div>
           </div>
           <div class="step-item">
-            <div class="step-number">2</div>
+            <div class="step-number">
+              2
+            </div>
             <div class="step-content">
               <h3>智能匹配</h3>
               <p>系统为您推荐最合适的猫咪</p>
             </div>
-            <div class="step-arrow">→</div>
+            <div class="step-arrow">
+              →
+            </div>
           </div>
           <div class="step-item">
-            <div class="step-number">3</div>
+            <div class="step-number">
+              3
+            </div>
             <div class="step-content">
               <h3>视频互动</h3>
               <p>预约视频，与猫咪线上见面</p>
             </div>
-            <div class="step-arrow">→</div>
+            <div class="step-arrow">
+              →
+            </div>
           </div>
           <div class="step-item">
-            <div class="step-number">4</div>
+            <div class="step-number">
+              4
+            </div>
             <div class="step-content">
               <h3>带它回家</h3>
               <p>签订协议，开启美好时光</p>
@@ -136,21 +164,33 @@
             <h2>待领养的小可爱</h2>
             <p>每一只都在等待一个温暖的家</p>
           </div>
-          <router-link to="/cats" class="view-all">
+          <router-link
+            to="/cats"
+            class="view-all"
+          >
             查看全部 →
           </router-link>
         </div>
-        <div v-if="!loading" class="cats-grid">
+        <div
+          v-if="!loading"
+          class="cats-grid"
+        >
           <div 
             v-for="cat in featuredCats" 
             :key="cat.id"
             class="cat-card-wrapper"
           >
-            <CatCard :cat="cat" @click="goToDetail(cat.id)" />
+            <CatCard
+              :cat="cat"
+              @click="goToDetail(cat.id)"
+            />
           </div>
         </div>
-        <div v-else class="loading-cats">
-          <div class="spinner"></div>
+        <div
+          v-else
+          class="loading-cats"
+        >
+          <div class="spinner" />
           <p>加载中...</p>
         </div>
       </div>
@@ -163,7 +203,10 @@
             <h2>准备好迎接新成员了吗？</h2>
             <p>填写问卷，让我们为您找到最契合的猫咪伙伴</p>
           </div>
-          <router-link to="/questionnaire" class="cta-btn">
+          <router-link
+            to="/questionnaire"
+            class="cta-btn"
+          >
             🎯 立即开始匹配
           </router-link>
         </div>

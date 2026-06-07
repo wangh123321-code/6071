@@ -3,7 +3,10 @@
     <div class="questionnaire-header">
       <div class="progress-section">
         <div class="progress-bar">
-          <div class="progress-fill" :style="{ width: `${progress}%` }"></div>
+          <div
+            class="progress-fill"
+            :style="{ width: `${progress}%` }"
+          />
         </div>
         <div class="progress-text">
           <span>完成进度</span>
@@ -24,21 +27,38 @@
         >
           <span class="section-number">{{ index + 1 }}</span>
           <span class="section-title">{{ section.title }}</span>
-          <span class="section-check" v-if="isSectionCompleted(index)">✓</span>
+          <span
+            v-if="isSectionCompleted(index)"
+            class="section-check"
+          >✓</span>
         </div>
       </div>
     </div>
     
-    <div v-if="loading" class="loading-state">
-      <div class="spinner"></div>
+    <div
+      v-if="loading"
+      class="loading-state"
+    >
+      <div class="spinner" />
       <p>加载问卷中...</p>
     </div>
     
-    <transition name="slide-fade" mode="out-in" v-else>
-      <div v-if="currentSectionData" :key="currentSection" class="questionnaire-content">
+    <transition
+      v-else
+      name="slide-fade"
+      mode="out-in"
+    >
+      <div
+        v-if="currentSectionData"
+        :key="currentSection"
+        class="questionnaire-content"
+      >
         <div class="section-header">
           <h2>{{ currentSectionData.title }}</h2>
-          <p v-if="sectionDescriptions[currentSectionData.section]" class="section-desc">
+          <p
+            v-if="sectionDescriptions[currentSectionData.section]"
+            class="section-desc"
+          >
             {{ sectionDescriptions[currentSectionData.section] }}
           </p>
         </div>
@@ -55,13 +75,21 @@
           >
             <div class="question-header">
               <span class="question-number">Q{{ getQuestionIndex(question.id) }}</span>
-              <h3 class="question-text">{{ question.question }}</h3>
-              <span v-if="question.maxSelect" class="select-hint">
+              <h3 class="question-text">
+                {{ question.question }}
+              </h3>
+              <span
+                v-if="question.maxSelect"
+                class="select-hint"
+              >
                 (最多选择 {{ question.maxSelect }} 项)
               </span>
             </div>
             
-            <div v-if="question.type === 'single'" class="options-grid single-select">
+            <div
+              v-if="question.type === 'single'"
+              class="options-grid single-select"
+            >
               <button
                 v-for="option in question.options"
                 :key="option.value"
@@ -76,7 +104,10 @@
               </button>
             </div>
             
-            <div v-else-if="question.type === 'multiple'" class="options-grid multiple-select">
+            <div
+              v-else-if="question.type === 'multiple'"
+              class="options-grid multiple-select"
+            >
               <button
                 v-for="option in question.options"
                 :key="option.value"
@@ -95,7 +126,10 @@
               </button>
             </div>
             
-            <div v-if="showErrors && !isQuestionValid(question)" class="error-message">
+            <div
+              v-if="showErrors && !isQuestionValid(question)"
+              class="error-message"
+            >
               ⚠️ 请选择一个答案
             </div>
           </div>
@@ -125,14 +159,20 @@
             :disabled="!canSubmit || matchLoading"
             @click="handleSubmit"
           >
-            <span v-if="matchLoading" class="loading-spinner"></span>
+            <span
+              v-if="matchLoading"
+              class="loading-spinner"
+            />
             {{ matchLoading ? '匹配中...' : '查看匹配结果 🎯' }}
           </button>
         </div>
       </div>
     </transition>
     
-    <div v-if="showErrors" class="error-notice">
+    <div
+      v-if="showErrors"
+      class="error-notice"
+    >
       请完成所有必填问题后再继续
     </div>
   </div>

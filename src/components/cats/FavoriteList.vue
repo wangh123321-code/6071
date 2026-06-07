@@ -1,10 +1,18 @@
 <template>
   <div class="favorite-list">
-    <div v-if="favorites.length === 0" class="empty-state">
-      <div class="empty-icon">😿</div>
+    <div
+      v-if="favorites.length === 0"
+      class="empty-state"
+    >
+      <div class="empty-icon">
+        😿
+      </div>
       <h3>还没有收藏的猫咪</h3>
       <p>浏览猫咪列表，发现你心仪的小伙伴吧~</p>
-      <router-link to="/cats" class="browse-btn">
+      <router-link
+        to="/cats"
+        class="browse-btn"
+      >
         去浏览猫咪
       </router-link>
     </div>
@@ -21,20 +29,29 @@
       @end="onDragEnd"
     >
       <template #item="{ element, index }">
-        <div class="drag-item" :index="index">
+        <div
+          class="drag-item"
+          :index="index"
+        >
           <CatCard 
             :cat="element" 
-            @click="goToDetail(element)"
             draggable
+            @click="goToDetail(element)"
           />
-          <button class="remove-btn" @click="removeFavorite(element.id)">
+          <button
+            class="remove-btn"
+            @click="removeFavorite(element.id)"
+          >
             <span>🗑️</span>
           </button>
         </div>
       </template>
     </draggable>
     
-    <div v-if="favorites.length > 0" class="drag-tip">
+    <div
+      v-if="favorites.length > 0"
+      class="drag-tip"
+    >
       💡 提示：拖动左侧的 ⋮⋮ 图标可以调整收藏顺序
     </div>
   </div>

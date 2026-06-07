@@ -1,27 +1,49 @@
 <template>
   <div class="match-result">
-    <div v-if="!result" class="no-result">
-      <div class="icon">🎯</div>
+    <div
+      v-if="!result"
+      class="no-result"
+    >
+      <div class="icon">
+        🎯
+      </div>
       <h2>还没有匹配结果</h2>
       <p>先填写领养问卷，让我们为您找到最适合的猫咪伙伴</p>
-      <router-link to="/questionnaire" class="start-btn">
+      <router-link
+        to="/questionnaire"
+        class="start-btn"
+      >
         开始问卷匹配
       </router-link>
     </div>
     
-    <div v-else class="result-container">
+    <div
+      v-else
+      class="result-container"
+    >
       <div class="result-header">
         <div class="overall-score">
-          <div class="score-circle" :style="{ '--score-color': overallScoreColor }">
-            <svg class="progress-ring" viewBox="0 0 100 100">
-              <circle class="bg" cx="50" cy="50" r="45"></circle>
+          <div
+            class="score-circle"
+            :style="{ '--score-color': overallScoreColor }"
+          >
+            <svg
+              class="progress-ring"
+              viewBox="0 0 100 100"
+            >
+              <circle
+                class="bg"
+                cx="50"
+                cy="50"
+                r="45"
+              />
               <circle 
                 class="progress" 
                 cx="50" 
                 cy="50" 
                 r="45"
                 :style="progressStyle"
-              ></circle>
+              />
             </svg>
             <div class="score-content">
               <span class="score-number">{{ result.overallScore }}</span>
@@ -42,7 +64,9 @@
       </div>
       
       <div class="dimensions-section">
-        <h3 class="section-title">多维度匹配分析</h3>
+        <h3 class="section-title">
+          多维度匹配分析
+        </h3>
         <div class="dimensions-grid">
           <div 
             v-for="(score, dimension) in dimensionScores" 
@@ -52,7 +76,10 @@
             <div class="dimension-header">
               <span class="dimension-icon">{{ dimensionIcons[dimension] }}</span>
               <span class="dimension-name">{{ dimensionLabels[dimension] }}</span>
-              <span class="dimension-score" :style="{ color: getScoreColor(score) }">
+              <span
+                class="dimension-score"
+                :style="{ color: getScoreColor(score) }"
+              >
                 {{ score }}%
               </span>
             </div>
@@ -63,21 +90,28 @@
                   width: `${score}%`,
                   background: getScoreGradient(score)
                 }"
-              ></div>
+              />
             </div>
           </div>
         </div>
       </div>
       
       <div class="chart-section">
-        <h3 class="section-title">匹配雷达图</h3>
+        <h3 class="section-title">
+          匹配雷达图
+        </h3>
         <div class="chart-container">
-          <Radar :data="radarData" :options="radarOptions" />
+          <Radar
+            :data="radarData"
+            :options="radarOptions"
+          />
         </div>
       </div>
       
       <div class="suggestions-section">
-        <h3 class="section-title">💡 匹配建议</h3>
+        <h3 class="section-title">
+          💡 匹配建议
+        </h3>
         <div class="suggestions-list">
           <div 
             v-for="(suggestion, index) in result.suggestions" 
@@ -91,7 +125,9 @@
       </div>
       
       <div class="matched-cats-section">
-        <h3 class="section-title">🐱 为您推荐的猫咪</h3>
+        <h3 class="section-title">
+          🐱 为您推荐的猫咪
+        </h3>
         <div class="matched-cats-grid">
           <div 
             v-for="(cat, index) in result.matchedCats" 
@@ -99,7 +135,10 @@
             class="matched-cat-item"
             :style="{ animationDelay: `${index * 0.1}s` }"
           >
-            <div class="match-rank" :style="{ background: getRankColor(index) }">
+            <div
+              class="match-rank"
+              :style="{ background: getRankColor(index) }"
+            >
               TOP {{ index + 1 }}
             </div>
             <CatCard 
@@ -112,10 +151,16 @@
       </div>
       
       <div class="result-actions">
-        <button class="action-btn secondary" @click="retakeQuestionnaire">
+        <button
+          class="action-btn secondary"
+          @click="retakeQuestionnaire"
+        >
           🔄 重新填写问卷
         </button>
-        <router-link to="/cats" class="action-btn primary">
+        <router-link
+          to="/cats"
+          class="action-btn primary"
+        >
           浏览更多猫咪 →
         </router-link>
       </div>

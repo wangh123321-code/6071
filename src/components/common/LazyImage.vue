@@ -1,18 +1,29 @@
 <template>
-  <div class="lazy-image-wrapper" :class="{ loaded: isLoaded, error: hasError }">
-    <div v-if="!isLoaded && !hasError" class="placeholder">
-      <div class="paw-loader">🐾</div>
+  <div
+    class="lazy-image-wrapper"
+    :class="{ loaded: isLoaded, error: hasError }"
+  >
+    <div
+      v-if="!isLoaded && !hasError"
+      class="placeholder"
+    >
+      <div class="paw-loader">
+        🐾
+      </div>
     </div>
     <img
       v-if="!hasError"
       ref="imgRef"
       :alt="alt"
       :class="{ 'fade-in': isLoaded }"
+      loading="lazy"
       @load="onLoad"
       @error="onError"
-      loading="lazy"
-    />
-    <div v-if="hasError" class="error-placeholder">
+    >
+    <div
+      v-if="hasError"
+      class="error-placeholder"
+    >
       <span>😿</span>
       <p>图片加载失败</p>
     </div>

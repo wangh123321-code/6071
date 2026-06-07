@@ -1,21 +1,39 @@
 <template>
-  <div class="modal-overlay" @click.self="handleClose">
-    <div class="modal-content" @click.stop>
+  <div
+    class="modal-overlay"
+    @click.self="handleClose"
+  >
+    <div
+      class="modal-content"
+      @click.stop
+    >
       <div class="modal-header">
         <h3>📹 预约视频看猫</h3>
-        <button class="close-btn" @click="handleClose">✕</button>
+        <button
+          class="close-btn"
+          @click="handleClose"
+        >
+          ✕
+        </button>
       </div>
       
       <div class="modal-body">
         <div class="cat-info-bar">
-          <LazyImage :src="cat.avatar" :alt="cat.name" class="cat-avatar" />
+          <LazyImage
+            :src="cat.avatar"
+            :alt="cat.name"
+            class="cat-avatar"
+          />
           <div class="cat-basic">
             <h4>{{ cat.name }}</h4>
             <p>{{ cat.breed }} · {{ cat.ageText }}</p>
           </div>
         </div>
         
-        <form @submit.prevent="handleSubmit" class="appointment-form">
+        <form
+          class="appointment-form"
+          @submit.prevent="handleSubmit"
+        >
           <div class="form-row">
             <div class="form-group">
               <label for="name">您的姓名 <span class="required">*</span></label>
@@ -25,7 +43,7 @@
                 type="text"
                 placeholder="请输入您的姓名"
                 required
-              />
+              >
             </div>
             <div class="form-group">
               <label for="phone">联系电话 <span class="required">*</span></label>
@@ -35,7 +53,7 @@
                 type="tel"
                 placeholder="请输入您的手机号"
                 required
-              />
+              >
             </div>
           </div>
           
@@ -48,13 +66,23 @@
                 type="date"
                 :min="minDate"
                 required
-              />
+              >
             </div>
             <div class="form-group">
               <label for="time">预约时间 <span class="required">*</span></label>
-              <select id="time" v-model="form.time" required>
-                <option value="">请选择时间段</option>
-                <option v-for="slot in timeSlots" :key="slot.value" :value="slot.value">
+              <select
+                id="time"
+                v-model="form.time"
+                required
+              >
+                <option value="">
+                  请选择时间段
+                </option>
+                <option
+                  v-for="slot in timeSlots"
+                  :key="slot.value"
+                  :value="slot.value"
+                >
                   {{ slot.label }}
                 </option>
               </select>
@@ -65,18 +93,30 @@
             <label for="method">视频方式 <span class="required">*</span></label>
             <div class="radio-group">
               <label class="radio-item">
-                <input type="radio" v-model="form.method" value="wechat" />
-                <span class="radio-custom"></span>
+                <input
+                  v-model="form.method"
+                  type="radio"
+                  value="wechat"
+                >
+                <span class="radio-custom" />
                 <span>微信视频</span>
               </label>
               <label class="radio-item">
-                <input type="radio" v-model="form.method" value="qq" />
-                <span class="radio-custom"></span>
+                <input
+                  v-model="form.method"
+                  type="radio"
+                  value="qq"
+                >
+                <span class="radio-custom" />
                 <span>QQ视频</span>
               </label>
               <label class="radio-item">
-                <input type="radio" v-model="form.method" value="other" />
-                <span class="radio-custom"></span>
+                <input
+                  v-model="form.method"
+                  type="radio"
+                  value="other"
+                >
+                <span class="radio-custom" />
                 <span>其他方式</span>
               </label>
             </div>
@@ -93,7 +133,7 @@
               type="text"
               :placeholder="form.method === 'wechat' ? '请输入微信号' : form.method === 'qq' ? '请输入QQ号' : '请输入联系方式'"
               required
-            />
+            >
           </div>
           
           <div class="form-group">
@@ -103,23 +143,41 @@
               v-model="form.remark"
               rows="3"
               placeholder="有什么想了解的可以提前告诉我们..."
-            ></textarea>
+            />
           </div>
           
           <div class="agreement">
             <label class="checkbox-item">
-              <input type="checkbox" v-model="form.agreed" required />
-              <span class="checkbox-custom"></span>
-              <span>我已阅读并同意<a href="#" @click.prevent="showAgreement = true">《领养须知》</a></span>
+              <input
+                v-model="form.agreed"
+                type="checkbox"
+                required
+              >
+              <span class="checkbox-custom" />
+              <span>我已阅读并同意<a
+                href="#"
+                @click.prevent="showAgreement = true"
+              >《领养须知》</a></span>
             </label>
           </div>
           
           <div class="form-actions">
-            <button type="button" class="cancel-btn" @click="handleClose">
+            <button
+              type="button"
+              class="cancel-btn"
+              @click="handleClose"
+            >
               取消
             </button>
-            <button type="submit" class="submit-btn" :disabled="loading">
-              <span v-if="loading" class="btn-spinner"></span>
+            <button
+              type="submit"
+              class="submit-btn"
+              :disabled="loading"
+            >
+              <span
+                v-if="loading"
+                class="btn-spinner"
+              />
               {{ loading ? '提交中...' : '提交预约' }}
             </button>
           </div>
@@ -127,7 +185,11 @@
       </div>
     </div>
     
-    <div v-if="showAgreement" class="agreement-modal" @click.self="showAgreement = false">
+    <div
+      v-if="showAgreement"
+      class="agreement-modal"
+      @click.self="showAgreement = false"
+    >
       <div class="agreement-content">
         <h3>📋 领养须知</h3>
         <div class="agreement-text">
@@ -163,7 +225,12 @@
             <li>救助站保留对不合格领养家庭的猫咪收回权</li>
           </ul>
         </div>
-        <button class="confirm-btn" @click="showAgreement = false">我已了解</button>
+        <button
+          class="confirm-btn"
+          @click="showAgreement = false"
+        >
+          我已了解
+        </button>
       </div>
     </div>
   </div>

@@ -26,7 +26,7 @@
                 src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cat%20shelter%20volunteers%20caring%20for%20stray%20cats%20warm%20cozy%20atmosphere&image_size=landscape_4_3" 
                 alt="救助站日常"
                 loading="lazy"
-              />
+              >
             </div>
           </div>
         </section>
@@ -63,13 +63,18 @@
                 src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=happy%20cat%20being%20adopted%20warm%20family%20scene&image_size=landscape_4_3" 
                 alt="幸福的领养"
                 loading="lazy"
-              />
+              >
             </div>
           </div>
         </section>
         
-        <section id="contact" class="about-section contact-section">
-          <h2 class="text-center">联系我们</h2>
+        <section
+          id="contact"
+          class="about-section contact-section"
+        >
+          <h2 class="text-center">
+            联系我们
+          </h2>
           <div class="contact-grid">
             <div class="contact-card">
               <span class="contact-icon">📍</span>

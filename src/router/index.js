@@ -38,6 +38,12 @@ const routes = [
     meta: { title: '我的收藏 - 喵星之家' }
   },
   {
+    path: '/my-applications',
+    name: 'MyApplications',
+    component: () => import('@/views/MyApplicationsView.vue'),
+    meta: { title: '我的申请 - 喵星之家' }
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('@/views/AboutView.vue'),

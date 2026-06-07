@@ -4,10 +4,15 @@
       <div class="footer-content">
         <div class="footer-section brand">
           <div class="footer-logo">
-            <img src="/cat-paw.svg" alt="logo" />
+            <img
+              src="/cat-paw.svg"
+              alt="logo"
+            >
             <span>喵星之家</span>
           </div>
-          <p class="slogan">用爱给每一只流浪猫一个温暖的家</p>
+          <p class="slogan">
+            用爱给每一只流浪猫一个温暖的家
+          </p>
           <div class="stats">
             <div class="stat-item">
               <span class="stat-number">327</span>
@@ -26,10 +31,18 @@
         
         <div class="footer-section links">
           <h4>快速导航</h4>
-          <router-link to="/cats">浏览猫咪</router-link>
-          <router-link to="/questionnaire">智能匹配</router-link>
-          <router-link to="/about">关于我们</router-link>
-          <router-link to="/about#contact">联系我们</router-link>
+          <router-link to="/cats">
+            浏览猫咪
+          </router-link>
+          <router-link to="/questionnaire">
+            智能匹配
+          </router-link>
+          <router-link to="/about">
+            关于我们
+          </router-link>
+          <router-link to="/about#contact">
+            联系我们
+          </router-link>
         </div>
         
         <div class="footer-section contact">
@@ -43,7 +56,9 @@
       
       <div class="footer-bottom">
         <p>© 2024 喵星之家流浪猫救助站 版权所有</p>
-        <p class="warm-tip">💝 领养代替购买，用爱终结流浪</p>
+        <p class="warm-tip">
+          💝 领养代替购买，用爱终结流浪
+        </p>
       </div>
     </div>
   </footer>
